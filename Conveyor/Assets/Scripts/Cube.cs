@@ -17,12 +17,25 @@ public class Cube : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Conveyor>(out Conveyor conveyor))
         {
-            _speed = collision.gameObject.GetComponent<Conveyor>().GetSpeed();
+            SetSpeed(collision.gameObject.GetComponent<Conveyor>().GetSpeed());
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Conveyor>(out Conveyor conveyor))
+        {
+            SetSpeed(0);
         }
     }
 
     private void Update()
     {
         _rigidBody2D.AddForce(Vector2.right * _speed);
+    }
+
+    private void SetSpeed(float speed)
+    {
+        _speed = speed;
     }
 }
